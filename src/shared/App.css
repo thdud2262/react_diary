@@ -1,0 +1,24 @@
+@import './reset.css';
+
+@font-face {
+  font-family: 'GowunDodum-Regular';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/GowunDodum-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+    font-family: 'twaysky';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_tway@1.0/twaysky.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+body {
+  box-sizing: border-box;
+  width : 100vw;
+  height: 100vh;
+  background-color: #f1f3f5;
+  font-family: 'GowunDodum-Regular';
+
+}
