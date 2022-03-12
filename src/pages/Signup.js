@@ -1,7 +1,9 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import {actionCreators as userActions} from "../redux/modules/user";
 import { useHistory } from "react-router-dom";
-import styled from "styled-components"
 
+import styled from "styled-components"
 import { Image, Text, Input, Grid, Button } from "../elements";
 
 
@@ -10,7 +12,26 @@ import { Image, Text, Input, Grid, Button } from "../elements";
 
 const Signup = (props) => {
   const history = useHistory();
+  const dispatch = useDispatch();
 
+  const [id, setId] = React.useState('');
+  const [pwd, setPwd] = React.useState('');
+  const [pwdCheck, setPwdCheck] = React.useState('');
+  const [nickname, setNickname] = React.useState('');
+
+  const goSignup =()=>{
+    if(id===""){
+      window.alert('아이디를 확인해주세요')
+      return
+    }
+    const ExpUserpw = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z!@#$%^&*]{6,12}$/;
+    if(pwd!==pwdCheck || !ExpUserpw.test(pwd)){
+      window.alert('비밀번호를 다시 한번 확인해주세요')
+      return
+    }
+    console.log(id, pwd, pwdCheck, nickname)
+    dispatch(userActions.signupFB(id,pwd,nickname))
+  }
   return(
     <LoginPage>
       <Image shape='mainBG'/>
@@ -22,32 +43,45 @@ const Signup = (props) => {
             <Input 
               label='아이디'
               placeholder='아이디는 이메일 형식으로 입력해주세요'
-              _onChange={(e)=>{console.log('아이디입력')}}
+              _onChange={(e)=>{
+                // console.log('아이디입력')
+                setId(e.target.value)
+              }}
               margin='0 0 25px' B_radius='5px' border='1px solid gray'
             />
             <Input 
               label='닉네임'
               placeholder='닉네임을 입력해주세요'
-              _onChange={(e)=>{console.log('닉네임 입력')}}
+              _onChange={(e)=>{
+                // console.log('닉네임 입력')
+                setNickname(e.target.value)
+              }}
               margin='0 0 25px' B_radius='5px' border='1px solid gray'
             />
             <Input 
               label='비밀번호'
               type='password'
               placeholder='비밀번호는 6-12자 사이로 입력해주세요'
-              _onChange={(e)=>{console.log('비밀번호입력')}}
+              _onChange={(e)=>{
+                // console.log('비밀번호입력')
+                setPwd(e.target.value)
+              }}
               margin='0 0 25px' B_radius='5px' border='1px solid gray'
             />
             <Input 
               label='비밀번호 확인'
               type='password'
               placeholder='비밀번호를 한번 더 입력해주세요'
-              _onChange={(e)=>{console.log('비밀번호입력')}}
+              _onChange={(e)=>{
+                // console.log('비밀번호입력')
+                setPwdCheck(e.target.value)
+              }}
               margin='0 0 25px' B_radius='5px' border='1px solid gray'
             />
             <Button 
               text='회원가입' shape='full' 
               margin='20px 0 15px' B_radius='5px' border='1px solid gray'
+              _onClick = {goSignup}
             />
             <Text 
               align='center' cursor 

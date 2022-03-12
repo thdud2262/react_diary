@@ -1,12 +1,37 @@
 import React from "react";
+import {actionCreators as userActions} from "../redux/modules/user";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components"
 
 import { Image, Text, Input, Grid, Button } from "../elements";
+import { setCookie, getCookie, deleteCookie } from "../shared/Cookie";
 
 const Login = (props) => {
+  const dispatch = useDispatch();
   const history = useHistory();
+  const [id, setId] = React.useState('');
+  const [pwd, setPwd] = React.useState('');
 
+  const goLogin=()=>{
+    
+    // console.log(id, pwd)
+    // setCookie("user_id", id, 1)
+    // setCookie("user_pwd", pwd, 1)
+    if (id === ""){
+      window.alert('아이디를 입력해주세요')
+      return
+    }
+    if (pwd ===""){
+      window.alert('비밀번호를 입력해주세요')
+      return
+    }
+    console.log('로그인시작')
+    dispatch(userActions.loginFB(id, pwd));
+    console.log('로그인 완료')
+    // history.push('/')
+    // 컴포넌트 아닌 리듀서에서 history사용!
+  }
   return(
     <LoginPage>
       <Image shape='mainBG'/>
@@ -18,7 +43,10 @@ const Login = (props) => {
             <Input 
               label='아이디'
               placeholder='아이디는 이메일 형식으로 입력해주세요'
-              _onChange={(e)=>{console.log('아이디입력')}}
+              _onChange={(e)=>{ 
+                setId(e.target.value) 
+                // console.log(e.target.value)
+              }}
               margin='0 0 25px' B_radius='5px' border='1px solid gray'
             >
             </Input>
@@ -26,11 +54,19 @@ const Login = (props) => {
               label='비밀번호'
               type='password'
               placeholder='비밀번호는 6-12자 이내로 입력해주세요'
-              _onChange={(e)=>{console.log('비밀번호입력')}}
+              _onChange={(e)=>{ 
+                setPwd(e.target.value) 
+                // console.log(e.target.value)
+              }}
               margin='0 0 25px' B_radius='5px' border='1px solid gray'
             >
             </Input>
-            <Button text='로그인' shape='full' margin='20px 0 15px' B_radius='5px' border='1px solid gray'></Button>
+            <Button
+              _onClick = {goLogin}
+              text='로그인' shape='full' 
+              margin='20px 0 15px' B_radius='5px' border='1px solid gray'
+            >
+            </Button>
             <Text align='center' cursor _onClick={()=>{history.push('/signup')}} >회원이 아니신가요? 회원가입 하기</Text>
           </Grid>
         </Grid>
